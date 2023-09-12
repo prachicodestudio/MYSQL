@@ -1,0 +1,167 @@
+							MYSQL
+						       -------
+Session-01
+----------
+File Management System
+-----------------------
+Information / data stored in file.
+MS Excel
+
+What is a Database ?
+
+The database is a collection of inter-related data which is used to retrieve, insert and delete the data efficiently. 
+It is also used to organize the data in the form of a table, schema, views, and reports, etc.
+
+C - Create
+R- Read
+U - Update
+D - Delete
+
+
+Example : The college Database organizes the data about the admin, staff, students and faculty etc.
+
+Using the database, you can easily retrieve, insert, and delete the information.
+
+Types Of Database
+-----------------
+1) DBMS ( Database management System) Dbase, Foxpro 
+2) RDBMS (Relational Database Management System) - MySQL, SQL Serever, DB2, Oracle, MS-Access..
+
+SQL (Structure Query Language)- used to communicate with the database to perform different kinds of operations.
+
+Components of Database
+----------------------
+1) Server - actual data is stored
+2) Client - used to perform operations on databse server
+
+Types of client
+---------------
+Graphical user Interface client
+Command line client
+
+MySQL Clients
+-------------
+MySQL Workbench (GUI Client)
+MySQL Shell (CLI Client)
+Toad
+Squirell
+
+Install MySQL
+-------------
+
+Session-02
+--------------
+
+1) Working on MySQL Workbench & Command prompt client
+2) SQL Commands
+
+Types of SQL Commands
+-----------------------
+1. DDL (Data Definition Language)
+Create, Alter, Drop, Truncate , Rename
+Commands are auto committed
+
+2. DML (Data Manupulation Language)
+Insert, Update, Delete
+DML Commands are not auto commited means it cant permanetly save all the changes in the database. They can be rollback.
+
+3. DCL (Data Control Language) (Administrative use)
+Grant, Revoke
+
+4. TCL (Transaction Control Language)
+Commit , Rollback, Savepoint
+
+5. DQL (Data Query Language)
+Select
+
+CREATE DATABASE IF NOT EXIST databasename;
+CREATE SCHEMA databasename;
+
+DROP DATABASE databaseName;
+DROP SCHEMA databaseName;
+
+CREATE TABLE EMPLOYEE(Name VARCHAR(20), Email VARCHAR(100), DOB DATE);  
+describe Student;
+
+
+INSERT INTO Student values(1, "Prachi", 77);
+INSERT INTO Student (SNO, SNAME, MARKS)values(1, "Prachi", 77);
+
+Session-03
+----------
+How to select Data from the table?
+Select 
+
+mysql -u root -p employees < employees.sql
+
+set path=%PATH%;C:\Program Files\MySQL\MySQL Server 8.0\bin;
+
+
+
+SQL Datatypes
+--------------
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);
+
+CREATE TABLE Persons (
+    PersonID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+
+Numeric
+Text
+Date/Time
+
+
+->WHERE CLAUSE
+-------------
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+Session-04
+-----------
+
+ORDER BY (For Sorting the rows in the result)
+
+SELECT 
+   select_list
+FROM 
+   table_name
+ORDER BY 
+   column1 [ASC|DESC], 
+   column2 [ASC|DESC],
+   ...;
+
+
+MySQL DISTINCT clause  to remove duplicates from the result given by the SELECT clause.
+
+SELECT DISTINCT
+    select_list
+FROM
+    table_name
+WHERE 
+    search_condition
+ORDER BY 
+    sort_expression;
+
+OPERATORS
+------------
+AND operator
+It is used in the WHERE clause of the SELECT, UPDATE, DELETE statements to form a condition.
+The AND operator is used to filter records based on more than one condition
+
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 AND condition2 AND condition3 ...;
+
+
+
+
