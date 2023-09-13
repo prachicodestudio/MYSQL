@@ -152,8 +152,11 @@ WHERE
 ORDER BY 
     sort_expression;
 
+
+Session-05
+
 OPERATORS
-------------
+---------
 AND operator
 It is used in the WHERE clause of the SELECT, UPDATE, DELETE statements to form a condition.
 The AND operator is used to filter records based on more than one condition
@@ -163,5 +166,47 @@ FROM table_name
 WHERE condition1 AND condition2 AND condition3 ...;
 
 
+Or Operator
 
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 OR condition2 OR condition3 ...;
+
+Ex1.
+
+SELECT    
+	customername, 
+	country
+FROM    
+	customers
+WHERE country = 'USA' OR 
+      country = 'France';
+
+Ex2.
+
+SELECT   
+	customername, 
+	country, 
+	creditLimit
+FROM   
+	customers
+WHERE(country = 'USA'
+		OR country = 'France')
+	  AND creditlimit > 100000;
+
+The OR operator displays a record if any of the conditions are TRUE.
+The AND operator displays a record if all the conditions are TRUE.
+
+
+Not Operator
+The NOT operator is used in combination with other operators to give the opposite result
+
+NOT LIKE
+NOT BETWEEN
+NOT IN
+NOT GREATER THAN (>)
+NOT LESS THAN (<)
+
+IN Opertator
+The IN operator allows you to specify multiple values in a WHERE clause.
 
