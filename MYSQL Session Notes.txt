@@ -96,6 +96,8 @@ mysql -u root -p employees < employees.sql
 
 set path=%PATH%;C:\Program Files\MySQL\MySQL Server 8.0\bin;
 
+Error Code: 1075. Incorrect table definition; there can be only one auto column and it must be defined as a key
+
 
 
 SQL Datatypes
@@ -209,4 +211,49 @@ NOT LESS THAN (<)
 
 IN Opertator
 The IN operator allows you to specify multiple values in a WHERE clause.
+
+Session- 06
+-----------
+DDL Commands
+
+
+Primary Key
+A primary key is a column or a set of columns that uniquely identifies each row in the table.  
+
+Rules of Primary Key:
+
+1) A primary key must contain unique values. If the primary key consists of multiple columns, the combination of values in these columns must be unique.
+
+2 )A primary key column cannot have NULL values. Any attempt to insert or update NULL to primary key columns will result in an error. 
+MySQL implicitly adds a NOT NULL constraint to primary key columns.
+
+3) A table can have one an only one primary key.
+DROP TABLE table_name;
+
+DDL Commands (Auto committed)
+---------------------------------
+1) Create Table- Used for creating database objects like a database and a database table, views, Triggers etc.
+
+2) Alter Table - Used for modifying and renaming elements of an existing database table. Add new column, Drop column, Modify existing column, Rename column 
+
+3) Truncate Table- Used to remove all the records from a database table.
+TRUNCATE TABLE table_name;
+
+DELETE FROM TABLE_NAME WHERE Condition; (DML, not auto committed)
+
+4) Drop Table- Used for removing an entire database or a database table.
+DROP TABLE table_name;
+
+5) Rename Table- Used to change the name of the database table.
+
+RENAME TABLE old_table _name To new_table_name; 
+
+ALTER TABLE table_name RENAME TO new_table_name;   
+
+
+
+
+
+
+
 
