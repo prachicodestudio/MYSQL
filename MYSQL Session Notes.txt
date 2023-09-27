@@ -250,6 +250,20 @@ RENAME TABLE old_table _name To new_table_name;
 
 ALTER TABLE table_name RENAME TO new_table_name;   
 
+Session-07
+----------
+1) String Functions
+2) Mathematical/Numeric functions
+3) Date/Time Functions
+4) Aggregate Function
+
+Session-08
+-----------
+1) Mathematical/Numeric functions
+2) Date/Time Functions
+3) Aggregate Function
+
+
 
 
 
