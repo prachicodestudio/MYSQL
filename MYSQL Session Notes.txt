@@ -13,7 +13,7 @@ The database is a collection of inter-related data which is used to retrieve, in
 It is also used to organize the data in the form of a table, schema, views, and reports, etc.
 
 C - Create
-R- Read
+R-  Read
 U - Update
 D - Delete
 
@@ -569,4 +569,320 @@ WHERE
 select first_name, last_name, department_id, 
 (select department_name from departments where employees.department_id = departments.department_id) departmentname  from employees;               
             
-            
+Session -13
+------------
+MYSQL Constraints - Rule that allows or restricts what values/data will be stored in the table.
+
+SYNTAX-
+
+CREATE TABLE new_table_name (  
+    col_name1 datatype constraint,  
+    col_name2 datatype constraint,  
+    col_name3 datatype constraint,  
+    .........  
+);  
+
+OR After creation of table
+ALTER TABLE........
+
+
+MY SQL Constraints
+---------------
+NOT NULL - specifies that the column cannot have NULL or empty values.
+column_name data_type NOT NULL;
+
+UNIQUE - This constraint ensures that all values inserted into the column will be unique. 
+Unique constraint can be created at column level and table level both.
+Unique constraint allows duplicate null values.
+
+Primary key – This constraint is used to identify each record in a table uniquely. If the column contains primary key constraints, then it cannot be null or empty. 
+
+Composite Key- A composite key in MySQL is a combination of two or more than two columns in a table that allows us to identify each row of the table uniquely.
+
+Foreign key – The FOREIGN KEY constraint is a key used to link two tables together.
+A FOREIGN KEY is a field (or collection of fields) in one table that refers to the PRIMARY KEY in another table.
+
+
+-- Each value inserted or updated in child table must exactly match a value in parent, or be NULL.
+
+-- Values in parent table that are referenced by child table cannot be deleted or updated, unless you have cascading actions. 
+However, values of parent table that are not present in child table can be deleted or updated.
+
+on delete cascade on update cascade - When a referenced foreign key is deleted or updated, all rows referencing that key are deleted or updated, respectively. 
+
+CHECK - Ensures that the inserted value in a column must be satisfied with the given condition. 
+
+DEFAULT Constraint- Set the default value for the particular column where we have not specified any value.
+
+AUTO_INCREMENT - Automatically generates a unique number whenever we insert a new record into the table. Generally, we use this constraint for the primary key field in a table.
+
+Practical code
+
+USE DEMODB;
+DROP TABLE STUDENTTABLE;
+CREATE TABLE student (ROLL int NOT NULL, FNAME VARCHAR(20) NOT NULL, LNAME VARCHAR(20) NOT NULL, MARKS INT);
+INSERT INTO Student VALUES(1, 'Radha', 'Gupta', 88);  
+select * from student;
+INSERT INTO Student VALUES(2, "Sita", 'Gupta', 89);  
+
+drop table student;
+
+CREATE TABLE student (ROLL int 
+, FNAME VARCHAR(20) ,
+ LNAME VARCHAR(20), 
+ MARKS INT, 
+ UNIQUE(ROLL, FNAME));
+ 
+INSERT INTO Student VALUES(1, 'Radha', 'Gupta', 88);  
+INSERT INTO Student VALUES(1, 'Radha', 'Gupta', 88); -- not allowed 
+INSERT INTO Student VALUES(2, 'Sita', 'Gupta', 88);  
+INSERT INTO Student VALUES(null, 'Sita', 'Gupta', 88);  
+INSERT INTO Student VALUES(null, 'Shyam', 'Gupta', 88);  -- allowed
+
+CREATE TABLE student (ROLL int PRIMARY KEY
+, FNAME VARCHAR(20) ,
+ LNAME VARCHAR(20), 
+ MARKS INT
+ );
+
+INSERT INTO Student VALUES(1, 'Radha', 'Gupta', 88);  
+
+SELECT * FROM STUDENT;
+
+INSERT INTO Student VALUES(1, 'Radha', 'Gupta', 88);  -- DUPLICATE NOT ALLOWED
+INSERT INTO Student VALUES(NULL, 'Radha', 'Gupta', 88);  -- NULL NOT ALLOWED
+INSERT INTO Student VALUES(2, 'Radha', 'Gupta', 88);  
+
+CREATE TABLE student (ROLL int, 
+MOBILE VARCHAR(20) ,
+FNAME VARCHAR(20) ,
+ LNAME VARCHAR(20), 
+ MARKS INT,
+PRIMARY KEY(ROLL,MOBILE)
+  );
+INSERT INTO Student VALUES(1, '9988774455','Radha', 'Gupta', 88);  
+INSERT INTO Student VALUES(2, '9988774455','Radha', 'Gupta', 88);  
+INSERT INTO Student VALUES(2, '9988774456','Radha', 'Gupta', 88);  
+INSERT INTO Student VALUES(2, '9988774456','Radha', 'Gupta', 88);  
+
+
+drop table employee;
+
+CREATE TABLE department (dept_id int primary key, 
+Dept_name VARCHAR(20)
+  );
+
+CREATE TABLE employee (empid int primary key, 
+EMP_NAME VARCHAR(20) ,
+dept_id int,
+foreign key (dept_id) references department(dept_id)
+  );
+  
+  
+  INSERT INTO department VALUES(1, "IT");  
+    INSERT INTO department VALUES(2, "HR");  
+      INSERT INTO department VALUES(3, "PAYROLL");  
+        INSERT INTO department VALUES(4, "ADMIN");  
+    INSERT INTO department VALUES(5, "TEST");  
+  
+  select * from department;
+  
+    INSERT INTO employee VALUES(1, "Mark", 1);  
+        INSERT INTO employee VALUES(2, "John", 1);  
+            INSERT INTO employee VALUES(3, "Mike", 2); 
+                INSERT INTO employee VALUES(4, "Mary", 3);  
+
+  select * from employee;
+                INSERT INTO employee VALUES(5, "Radha", 5);  -- invalid
+
+
+delete from employee where dept_id =5;
+
+delete from department where dept_id =5;
+ INSERT INTO employee VALUES(6, "Shyama", null); -- null is allowd
+
+
+drop table employee; -- child table
+drop table department; -- parent
+
+
+CREATE TABLE department (dept_id int primary key, 
+Dept_name VARCHAR(20)
+  ); -- parent table
+
+CREATE TABLE employee (empid int primary key, 
+EMP_NAME VARCHAR(20) ,
+dept_id int,
+foreign key (dept_id) references department(dept_id) on delete cascade on update cascade
+  ); --  child table
+  
+  
+   INSERT INTO department VALUES(1, "IT");  
+    INSERT INTO department VALUES(2, "HR");  
+      INSERT INTO department VALUES(3, "PAYROLL");  
+        INSERT INTO department VALUES(4, "ADMIN");  
+        
+        
+    INSERT INTO employee VALUES(1, "Mark", 1);  
+        INSERT INTO employee VALUES(2, "John", 1);  
+            INSERT INTO employee VALUES(3, "Mike", 2); 
+                INSERT INTO employee VALUES(4, "Mary", 3);  
+  select * from employee;
+  
+  select * from department;
+
+UPDATE department SET dept_id=5 WHERE Dept_name='IT';  
+
+Alter table employee
+Add salary int check (salary between 5000 and 50000);
+
+UPDATE employee SET salary= 6000 WHERE EMP_NAME='Mark';  
+
+Alter table employee
+Add gender varchar(20) check (gender in ('Male', 'Female'));
+
+UPDATE employee SET gender= 'Male' WHERE EMP_NAME='Mark';  
+
+
+create table orders
+(
+ id int not null,
+ orderNumber int not null,
+OrderDate date default(CURRENT_DATE)
+ );
+ 
+insert into Orders(ID,OrderNumber,OrderDate) values(1,001,'2023-05-10');
+
+insert into Orders(ID,OrderNumber) values(1,001);
+
+select * from orders;
+
+Alter table employee
+Add emp_status varchar(20) default "Not Joined";
+
+insert into employee(empid,EMP_NAME, dept_id, salary, gender,emp_status) values(9,"Ramesh", 3, 7000, "Female","Joined");
+
+select * from employee;
+
+
+create table orders
+(
+ id int primary key auto_increment,
+ orderNumber int not null,
+OrderDate date default(CURRENT_DATE)
+ );
+ 
+insert into Orders(OrderNumber,OrderDate) values(001,'2023-05-10');
+
+insert into Orders(ID,OrderNumber) values(1,001);
+
+select * from orders;
+insert into Orders(OrderNumber,OrderDate) values(002,'2023-05-10');
+insert into Orders(OrderNumber) values(003);
+
+select CURRENT_DATE();
+
+
+Session -14
+--------------
+
+Auto Increment 
+--------------
+
+Auto Increment is a function that operates on numeric data types. It automatically generates sequential numeric values every time that a record is inserted into a table for a field defined as auto increment.
+
+The auto-increment feature is used to automatically assign a unique value whenever a new record is added to the table. It simplifies data entry.
+
+LIMIT
+-----
+MySQL Limit query is used to restrict the number of rows returns from the result set, rather than fetching the whole set in the MySQL database.
+
+QWERTY@123
+Ipshita@123
+
+
+Session -15
+------------
+
+1. Views
+
+In MySQL, the View is a virtual table created by a query by joining one or more tables.
+
+CREATE VIEW `view_name` AS SELECT statement;
+
+Views are virtual tables; they do not contain the data that is returned. The data is stored in the tables referenced in the SELECT statement.
+
+Views improve security of the database by showing only intended data to authorized users. They hide sensitive data.
+
+Views make life easy as you do not have write complex queries time and again.
+
+It’s possible to use INSERT, UPDATE and DELETE on a VIEW. These operations will change the underlying tables of the VIEW. 
+
+
+2. Index
+
+SQL Indexes are special lookup tables that are used to speed up the process of data retrieval. 
+SQL Indexes work similar to the index of a book or a journal.
+
+CREATE INDEX index_name ON table_name(column1, column2..);
+
+Indexes are very powerful when it comes to greatly improving the performance of MySQL search queries.
+Indexes can be defined when creating a table or added later on after the table has already been created.
+
+
+Session -16
+------------
+
+1) Transaction Control Language (TCL) Commands
+
+a) Commit - make changes permanent. 
+In mysql, By default, the COMMIT statement executed automatically. It means autocommit is ON or enabled.
+ 
+So if we do not want to commit changes automatically, we have to disable autocommit.
+
+
+b) Auto Commit
+
+SET autocommit = 0;  
+OR,  
+SET autocommit = OFF;
+
+
+to enable auto-commit mode:
+
+SET autocommit = 1;  
+OR,  
+SET autocommit = ON; 
+
+c) Roll back - cancel changes
+
+Session -17
+-------------
+
+Java Database connectivity(JDBC) With MYSQL
+
+
+A) Java (Java Development Kit (JDK))
+verify java installation -  java --version
+
+B) Eclipse
+
+Java & Eclipse Installation On Windows
+https://www.youtube.com/watch?v=f-Cs8MlQB7o&t=0s
+
+C) mysql JDBC Driver
+
+https://dev.mysql.com/downloads
+
+1) Create a connection
+2) Create statement
+3) Execute statement
+4) Store the result in result set
+5) Close connection
+
+Connection con=DriverManager.getConnection(  
+"jdbc:mysql://localhost:3306/databaseName","root","root");  
+
+//here databaseNameis database name, root is username and password  
+
+Statement stmt=con.createStatement();  
