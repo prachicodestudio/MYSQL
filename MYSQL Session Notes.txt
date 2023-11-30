@@ -880,9 +880,14 @@ https://dev.mysql.com/downloads
 4) Store the result in result set
 5) Close connection
 
-Connection con=DriverManager.getConnection(  
-"jdbc:mysql://localhost:3306/databaseName","root","root");  
 
-//here databaseNameis database name, root is username and password  
+Select - to retrieve data
 
-Statement stmt=con.createStatement();  
+insert , update, delete ---data manupulation
+
+
+
+
+
+
+
